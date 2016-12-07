@@ -5,5 +5,11 @@ apiKey = gets.chomp
 
 Tinify.key = apiKey
 
-source = Tinify.from_file("unoptimized.jpg")
-source.to_file("optimized.jpg")
+# Create a directory called output in case that its dont exist
+Dir.mkdir("output") unless File.exists?("output")
+
+Dir.glob("*.{png,jpg}").each{|image|
+  puts "Minifing the  #{image}"
+  source = Tinify.from_file(image)
+  source.to_file("output/" + image)
+}
